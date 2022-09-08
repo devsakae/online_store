@@ -1,10 +1,10 @@
 import React from 'react';
 import './App.css';
-
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Search from './pages/Search';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import { getCategories } from './services/api';
+import Search from './pages/Search';
 import Categorias from './pages/Categorias';
+import Carrinho from './pages/Carrinho';
 
 class App extends React.Component {
   state = {
@@ -29,10 +29,19 @@ class App extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
+          <Link
+            to="/carrinho"
+            data-testid="shopping-cart-button"
+          >
+            🛒 Carrinho de compras
+          </Link>
             <Search
               searchString={ false }
             />
             { !loading && <Categorias categorias={ categorias } /> }
+          </Route>
+          <Route exact path="/carrinho">
+            <Carrinho />
           </Route>
         </Switch>
       </BrowserRouter>
