@@ -29,12 +29,12 @@ class App extends React.Component {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-          <Link
-            to="/carrinho"
-            data-testid="shopping-cart-button"
-          >
-            🛒 Carrinho de compras
-          </Link>
+            <Link
+              to="/carrinho"
+              data-testid="shopping-cart-button"
+            >
+              🛒 Carrinho de compras
+            </Link>
             <Search
               searchString={ false }
             />
