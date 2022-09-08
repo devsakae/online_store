@@ -1,15 +1,21 @@
 import React from 'react';
 
-class Categorias extends React.Components {
+class Categorias extends React.Component {
   render() {
+    const { categorias } = this.props;
     return (
-      <div>
-        <label htmlFor="categorias">
-          <input
-            type="radio"
-          />
-        </label>
-      </div>
+      <ul>
+        {
+          categorias.map((categoria) => {
+          <li
+            data-testid='category'
+            key={categoria.id}
+          >
+          {categoria.name}
+          </li>
+          })
+        }
+      </ul>
     );
   }
 }
