@@ -1,15 +1,19 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import teste from 'prop-types';
 import { getCategories } from './services/api';
-import Search from './pages/Search';
 import Categorias from './pages/Categorias';
 import Carrinho from './pages/Carrinho';
+import Itens from './pages/Itens';
 
 class App extends React.Component {
   state = {
     loading: true,
     categorias: [],
+    listItens: [],
+    haveItens: false,
+    name: '',
   };
 
   componentDidMount() {
@@ -23,8 +27,30 @@ class App extends React.Component {
     fecthApi();
   }
 
+  onInputChange = ({ target: { value } }) => {
+    this.setState({
+      name: value,
+    });
+  };
+
+  handleClick = () => {
+    const fetchApiItem = async () => {
+      const { name } = this.state;
+      const url = `https://api.mercadolibre.com/sites/MLB/search?q=${name}`;
+      const response = await fetch(url);
+      const objJason = await response.json();
+      return objJason.results;
+    };
+    const itens = fetchApiItem();
+    this.setState({
+      listItens: itens,
+      haveItens: true,
+    });
+  };
+
   render() {
-    const { categorias, loading } = this.state;
+    const { categorias, loading, listItens, haveItens, name } = this.state;
+
     return (
       <BrowserRouter>
         <Switch>
@@ -35,10 +61,21 @@ class App extends React.Component {
             >
               🛒 Carrinho de compras
             </Link>
-            <Search
-              searchString={ false }
+            <input
+              data-testid="query-input"
+              name="name"
+              onChange={ this.onInputChange }
+              value={ name }
             />
+            <button
+              data-testid="query-button"
+              type="button"
+              onClick={ this.handleClick }
+            >
+              Pesquisar
+            </button>
             { !loading && <Categorias categorias={ categorias } /> }
+            { haveItens && <Itens itens={ listItens } />}
           </Route>
           <Route exact path="/carrinho">
             <Carrinho />
@@ -50,3 +87,7 @@ class App extends React.Component {
 }
 
 export default App;
+
+App.propTypes = {
+  handleClick: teste.func,
+}.isRequired;
