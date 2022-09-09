@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import teste from 'prop-types';
 import { getProductById } from '../services/api';
+import Itens from './Itens';
 
 export default class SubCategorias extends Component {
   state = {
@@ -25,7 +26,7 @@ export default class SubCategorias extends Component {
     return (
       <>
         <div>SubCategorias</div>
-        { !loading && subcategorias.results.map((subcat) => (<p>{ subcat.title} </p>)) }
+        { !loading && <Itens itens={ subcategorias.results } /> }
       </>
     );
   }
