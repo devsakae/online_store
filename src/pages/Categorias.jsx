@@ -13,7 +13,9 @@ class Categorias extends React.Component {
                 data-testid="category"
                 key={ categoria.id }
               >
-                { categoria.name }
+                <a href="/subs">
+                  { categoria.name }
+                </a>
               </li>
             ))
           }

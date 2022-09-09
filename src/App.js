@@ -6,6 +6,7 @@ import { getCategories } from './services/api';
 import Categorias from './pages/Categorias';
 import Carrinho from './pages/Carrinho';
 import Itens from './pages/Itens';
+import SubCategorias from './pages/SubCategorias';
 
 class App extends React.Component {
   state = {
@@ -45,6 +46,10 @@ class App extends React.Component {
     });
   };
 
+  buscaSubCategorias = async () => {
+    console.log('estou aqui');
+  };
+
   render() {
     const { categorias, loading, listItens, haveItens, name } = this.state;
 
@@ -71,7 +76,10 @@ class App extends React.Component {
             >
               Pesquisar
             </button>
-            { !loading && <Categorias categorias={ categorias } /> }
+            { !loading && <Categorias
+              categorias={ categorias }
+              buscaSubCategorias={ this.buscaSubCategorias }
+            /> }
             { haveItens ? <Itens itens={ listItens } />
               : (
                 <h1
@@ -80,6 +88,9 @@ class App extends React.Component {
                   Digite algum termo de pesquisa ou escolha uma categoria.
 
                 </h1>)}
+          </Route>
+          <Route exact path="/subs">
+            <SubCategorias />
           </Route>
           <Route exact path="/carrinho">
             <Carrinho />
