@@ -46,10 +46,6 @@ class App extends React.Component {
     });
   };
 
-  buscaSubCategorias = async () => {
-    console.log('estou aqui');
-  };
-
   render() {
     const { categorias, loading, listItens, haveItens, name } = this.state;
 
@@ -89,9 +85,7 @@ class App extends React.Component {
 
                 </h1>)}
           </Route>
-          <Route exact path="/subs">
-            <SubCategorias />
-          </Route>
+          <Route exact path="/subs/:id" component={ SubCategorias } />
           <Route exact path="/carrinho">
             <Carrinho />
           </Route>

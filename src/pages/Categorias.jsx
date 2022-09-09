@@ -1,5 +1,6 @@
 import React from 'react';
 import teste from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Categorias extends React.Component {
   render() {
@@ -9,14 +10,14 @@ class Categorias extends React.Component {
         <ul>
           {
             categorias.map((categoria) => (
-              <li
-                data-testid="category"
-                key={ categoria.id }
-              >
-                <a href="/subs">
+              <Link to={ `/subs/${categoria.id}` } key={ categoria.id }>
+                <li
+                  data-testid="category"
+                  key={ categoria.id }
+                >
                   { categoria.name }
-                </a>
-              </li>
+                </li>
+              </Link>
             ))
           }
         </ul>
