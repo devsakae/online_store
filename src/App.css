@@ -1,3 +1,32 @@
+body {
+  display: flex;
+  flex-flow: column;
+}
+
+:root {
+
+  --branco: #f8f9fc;
+
+  --cinza: #7b86aa;
+
+  --azulclaro: #bfc8ea;
+
+  --preto: #545051;
+
+  --azul: #5b67a2;
+}
+
+.header-menu {
+  background-color: var(--cinza);
+  display: flex;
+  flex-flow: row;
+  height: 100px;
+}
+
+.header-menu a {
+  text-decoration: none;
+}
+
 .container-col {
   display: flex;
   flex-flow: column;
@@ -6,4 +35,8 @@
 .container-row {
   display: flex;
   flex-flow: row;
+}
+
+.categorias ul li {
+  list-style: none;
 }
