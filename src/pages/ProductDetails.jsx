@@ -20,11 +20,24 @@ export default class ProductDetails extends Component {
 
   render() {
     const { productdetails, loading } = this.state;
+    console.log(productdetails);
     return (
       <>
         <div>ProductDetails</div>
-        { !loading && productdetails.title }
-        teste
+        { !loading
+        && <div>
+            <h2>{ productdetails.title }</h2>
+            <img src={ productdetails.thumbnail } alt={ productdetails.title } />
+            <p>{ productdetails.price }</p>
+            { productdetails.attributes
+              .map((atr) => (
+                <div>
+                  <p>{ atr.name }</p>
+                  <p>{ atr.value_name }</p>
+                </div>
+              )) }
+            </div>
+        }
       </>
     );
   }
