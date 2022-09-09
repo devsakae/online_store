@@ -75,7 +75,14 @@ class App extends React.Component {
               Pesquisar
             </button>
             { !loading && <Categorias categorias={ categorias } /> }
-            { haveItens && <Itens itens={ listItens } />}
+            { haveItens ? <Itens itens={ listItens } />
+              : (
+                <h1
+                  data-testid="home-initial-message"
+                >
+                  Digite algum termo de pesquisa ou escolha uma categoria.
+
+                </h1>)}
           </Route>
           <Route exact path="/carrinho">
             <Carrinho />
