@@ -4,17 +4,22 @@ body {
 }
 
 :root {
-  --branco: #F8F9FC;
-  --cinza: #7B86AA;
-  --azulclaro: #BFC8EA;
+
+  --branco: #f8f9fc;
+
+  --cinza: #7b86aa;
+
+  --azulclaro: #bfc8ea;
+
   --preto: #545051;
-  --azul: #5B67A2;
+
+  --azul: #5b67a2;
 }
 
 .header-menu {
+  background-color: var(--cinza);
   display: flex;
   flex-flow: row;
-  background-color: var(--cinza);
   height: 100px;
 }
 
