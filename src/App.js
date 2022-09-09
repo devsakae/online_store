@@ -86,11 +86,16 @@ class App extends React.Component {
 
                 </h3>)}
           </Route>
-          <Route exact path="/:id" component={ SubCategorias } />
           <Route exact path="/carrinho">
             <Carrinho />
           </Route>
-          <Route path="/productdetails/:id" component={ ProductDetails } />
+          <Route exact path="/:id" component={ SubCategorias } />
+          <Route
+            exact
+            path="/productdetails/:id"
+            component={ ProductDetails }
+
+          />
         </Switch>
       </BrowserRouter>
     );

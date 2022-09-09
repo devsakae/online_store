@@ -11,7 +11,11 @@ export default class Itens extends React.Component {
           itens.length < 1 ? (<p>Nenhum produto foi encontrado</p>)
             : (
               itens.map((item) => (
-                <Link to={ `/productdetails/${item.id}` } key={ item.id }>
+                <Link
+                  to={ `/productdetails/${item.id}` }
+                  key={ item.id }
+                  data-testid="product-detail-link"
+                >
                   <div
                     key={ item.id }
                     data-testid="product"

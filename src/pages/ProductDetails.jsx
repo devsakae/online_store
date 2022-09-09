@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import teste from 'prop-types';
+import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
 
 export default class ProductDetails extends Component {
@@ -22,23 +24,41 @@ export default class ProductDetails extends Component {
     const { productdetails, loading } = this.state;
     console.log(productdetails);
     return (
-      <>
+      <div className="card">
         <div>ProductDetails</div>
         { !loading
-        && <div>
-            <h2>{ productdetails.title }</h2>
-            <img src={ productdetails.thumbnail } alt={ productdetails.title } />
-            <p>{ productdetails.price }</p>
+        && (
+
+          <div>
+            <h2 data-testid="product-detail-name">{ productdetails.title }</h2>
+            <img
+              data-testid="product-detail-image"
+              src={ productdetails.thumbnail }
+              alt={ productdetails.title }
+            />
+            <p data-testid="product-detail-price">{ productdetails.price }</p>
+            <Link to="/carrinho">
+              <button data-testid="shopping-cart-button" type="button">
+                Adicionar ao carrinho
+              </button>
+            </Link>
             { productdetails.attributes
               .map((atr) => (
-                <div>
+                <div key={ atr.id }>
                   <p>{ atr.name }</p>
                   <p>{ atr.value_name }</p>
                 </div>
               )) }
-            </div>
-        }
-      </>
+          </div>)}
+      </div>
     );
   }
 }
+
+ProductDetails.propTypes = {
+  match: teste.shape({
+    params: teste.shape({
+      id: teste.string,
+    }),
+  }),
+}.isRequired;
