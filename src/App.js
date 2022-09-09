@@ -33,15 +33,12 @@ class App extends React.Component {
     });
   };
 
-  handleClick = () => {
-    const fetchApiItem = async () => {
-      const { name } = this.state;
-      const url = `https://api.mercadolibre.com/sites/MLB/search?q=${name}`;
-      const response = await fetch(url);
-      const objJason = await response.json();
-      return objJason.results;
-    };
-    const itens = fetchApiItem();
+  handleClick = async () => {
+    const { name } = this.state;
+    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${name}`;
+    const response = await fetch(url);
+    const objJason = await response.json();
+    const itens = objJason.results;
     this.setState({
       listItens: itens,
       haveItens: true,
