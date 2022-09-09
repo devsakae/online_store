@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import teste from 'prop-types';
-import { getProductById } from '../services/api';
+import { getProductsFromCategoryAndQuery } from '../services/api';
 import Itens from './Itens';
 
 export default class SubCategorias extends Component {
@@ -12,7 +12,7 @@ export default class SubCategorias extends Component {
   componentDidMount() {
     const getEm = async () => {
       const { match: { params: { id } } } = this.props;
-      const subcategorias = await getProductById(id);
+      const subcategorias = await getProductsFromCategoryAndQuery(id);
       this.setState({
         loading: false,
         subcategorias,

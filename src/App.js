@@ -7,6 +7,7 @@ import Categorias from './pages/Categorias';
 import Carrinho from './pages/Carrinho';
 import Itens from './pages/Itens';
 import SubCategorias from './pages/SubCategorias';
+import ProductDetails from './pages/ProductDetails';
 
 class App extends React.Component {
   state = {
@@ -78,17 +79,23 @@ class App extends React.Component {
             /> }
             { haveItens ? <Itens itens={ listItens } />
               : (
-                <h1
+                <h3
                   data-testid="home-initial-message"
                 >
                   Digite algum termo de pesquisa ou escolha uma categoria.
 
-                </h1>)}
+                </h3>)}
           </Route>
-          <Route exact path="/subs/:id" component={ SubCategorias } />
           <Route exact path="/carrinho">
             <Carrinho />
           </Route>
+          <Route exact path="/:id" component={ SubCategorias } />
+          <Route
+            exact
+            path="/productdetails/:id"
+            component={ ProductDetails }
+
+          />
         </Switch>
       </BrowserRouter>
     );
