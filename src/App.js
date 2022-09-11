@@ -113,7 +113,18 @@ class App extends React.Component {
               categorias={ categorias }
             />
           </Route>
-          <Route exact path="/category/:id" component={ ItensCategory } />
+          <Route
+            path="/category/:id"
+            render={ (routeProps) => (
+              <ItensCategory
+                { ...routeProps }
+                searchInput={ this.searchInput }
+                searchValue={ searchValue }
+                searchButton={ this.searchButton }
+                addToCart={ this.addToCart }
+              />
+            ) }
+          />
           <Route
             exact
             path="/productdetails/:id"

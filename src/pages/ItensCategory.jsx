@@ -23,10 +23,15 @@ export default class ItensCategory extends Component {
 
   render() {
     const { searchString, loading } = this.state;
+    const { searchInput, searchValue, searchButton, addToCart } = this.props;
     return (
       <>
-        <Header />
-        { !loading && <Itens itens={ searchString.results } /> }
+        <Header
+          searchInput={ searchInput }
+          searchValue={ searchValue }
+          searchButton={ searchButton }
+        />
+        { !loading && <Itens itens={ searchString.results } addToCart={ addToCart } /> }
       </>
     );
   }
