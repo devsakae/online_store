@@ -19,14 +19,17 @@
   --azul: #5b67a2;
 }
 
-.header-menu {
-  background-color: var(--cinza);
+header {
+  height: 15vh;
+  background-color: var(--azul);
   display: flex;
   flex-flow: row;
-  height: 100px;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.header-menu a {
+header a {
+  color: var(--branco);
   text-decoration: none;
 }
 
@@ -37,11 +40,6 @@
 
 .container-row {
   display: flex;
-  flex-flow: row wrap;
-}
-
-.categorias {
-  width: 20%;
 }
 
 .categorias li {

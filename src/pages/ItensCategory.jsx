@@ -4,10 +4,9 @@ import { getProductsFromCategoryAndQuery } from '../services/api';
 import Itens from './Itens';
 import Header from './Header';
 
-export default class SubCategorias extends Component {
+export default class ItensCategory extends Component {
   state = {
     loading: true,
-    subcategorias: [],
   };
 
   componentDidMount() {
@@ -33,7 +32,7 @@ export default class SubCategorias extends Component {
   }
 }
 
-SubCategorias.propTypes = {
+ItensCategory.propTypes = {
   match: teste.shape({
     params: teste.shape({
       id: teste.string,

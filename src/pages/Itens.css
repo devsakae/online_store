@@ -5,3 +5,7 @@
   border: 1px black solid;
   margin: 5px;
 }
+
+.item img {
+  max-height: 100px;
+}
