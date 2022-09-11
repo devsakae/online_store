@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import teste from 'prop-types';
 import { getCategories } from './services/api';
 import { getLocal, saveLocal } from './services/localhost';
@@ -9,6 +9,7 @@ import Itens from './pages/Itens';
 import ProductDetails from './pages/ProductDetails';
 import Header from './pages/Header';
 import ItensCategory from './pages/ItensCategory';
+import Categorias from './pages/Categorias';
 
 class App extends React.Component {
   state = {
@@ -71,47 +72,33 @@ class App extends React.Component {
               searchValue={ searchValue }
               searchButton={ this.searchButton }
             />
-            { !loading
-              && (
-                <ul className="categorias">
-                  {
-                    categorias.map((categoria) => (
-                      <Link
-                        to={ `/category/${categoria.id}` }
-                        key={ categoria.id }
-                      >
-                        <li
-                          data-testid="category"
-                          key={ categoria.id }
-                        >
-                          { categoria.name }
-                        </li>
-                      </Link>
-                    ))
-                  }
-                </ul>
-              )}
-            { !searchedItens
-              && (
-                <h3 data-testid="home-initial-message">
-                  Digite algum termo de pesquisa ou escolha uma categoria.
-                </h3>
-              ) }
-            { searchedItens
-              && (
-                <Itens
-                  itens={ listItens }
-                  addToCart={ this.addToCart }
-                />
-              ) }
+            <div className="container-row">
+              <Categorias categorias={ categorias } />
+              { !searchedItens
+                && (
+                  <h3 data-testid="home-initial-message">
+                    Digite algum termo de pesquisa ou escolha uma categoria.
+                  </h3>
+                ) }
+              { searchedItens
+                && (
+                  <Itens
+                    itens={ listItens }
+                    addToCart={ this.addToCart }
+                  />
+                ) }
+            </div>
           </Route>
           <Route exact path="/carrinho">
-            <Carrinho
+            <Header
               searchInput={ this.searchInput }
               searchValue={ searchValue }
               searchButton={ this.searchButton }
-              categorias={ categorias }
             />
+            <div className="container-row">
+              <Categorias categorias={ categorias } />
+              <Carrinho />
+            </div>
           </Route>
           <Route
             path="/category/:id"
@@ -126,9 +113,26 @@ class App extends React.Component {
             ) }
           />
           <Route
-            exact
             path="/productdetails/:id"
-            component={ ProductDetails }
+            render={ (routeProps) => (
+              <>
+                <Header
+                  searchInput={ this.searchInput }
+                  searchValue={ searchValue }
+                  searchButton={ this.searchButton }
+                />
+                { searchedItens
+              && (
+                <Itens
+                  itens={ listItens }
+                  addToCart={ this.addToCart }
+                />
+              ) }
+                <ProductDetails
+                  { ...routeProps }
+                />
+              </>
+            ) }
           />
         </Switch>
       </BrowserRouter>
@@ -139,5 +143,7 @@ class App extends React.Component {
 export default App;
 
 App.propTypes = {
-  handleClick: teste.func,
+  searchInput: teste.func,
+  searchButton: teste.func,
+  addToCart: teste.func,
 }.isRequired;
