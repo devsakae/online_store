@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import teste from 'prop-types';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { getCategories } from './services/api';
 import { getLocal, saveLocal } from './services/localhost';
 import Carrinho from './pages/Carrinho';
@@ -13,7 +13,6 @@ import Categorias from './pages/Categorias';
 
 class App extends React.Component {
   state = {
-    loading: true,
     categorias: [],
     listItens: [],
     searchedItens: false,
@@ -27,7 +26,6 @@ class App extends React.Component {
       const api = await getCategories();
       this.setState({
         categorias: api,
-        loading: false,
       });
     };
     fecthApi();
@@ -61,7 +59,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { categorias, loading, listItens, searchedItens, searchValue } = this.state;
+    const { categorias, listItens, searchedItens, searchValue } = this.state;
 
     return (
       <BrowserRouter>
@@ -74,18 +72,17 @@ class App extends React.Component {
             />
             <div className="container-row">
               <Categorias categorias={ categorias } />
-              { !searchedItens
-                && (
-                  <h3 data-testid="home-initial-message">
-                    Digite algum termo de pesquisa ou escolha uma categoria.
-                  </h3>
-                ) }
               { searchedItens
-                && (
+                ? (
                   <Itens
                     itens={ listItens }
                     addToCart={ this.addToCart }
                   />
+                )
+                : (
+                  <div data-testid="home-initial-message">
+                    Digite algum termo de pesquisa ou escolha uma categoria.
+                  </div>
                 ) }
             </div>
           </Route>
@@ -97,19 +94,42 @@ class App extends React.Component {
             />
             <div className="container-row">
               <Categorias categorias={ categorias } />
-              <Carrinho />
+              { searchedItens
+                ? (
+                  <Itens
+                    itens={ listItens }
+                    addToCart={ this.addToCart }
+                  />
+                ) : (<Carrinho />) }
             </div>
           </Route>
           <Route
             path="/category/:id"
             render={ (routeProps) => (
-              <ItensCategory
-                { ...routeProps }
-                searchInput={ this.searchInput }
-                searchValue={ searchValue }
-                searchButton={ this.searchButton }
-                addToCart={ this.addToCart }
-              />
+              <>
+                <Header
+                  searchInput={ this.searchInput }
+                  searchValue={ searchValue }
+                  searchButton={ this.searchButton }
+                />
+                <div className="container-row">
+                  <Categorias categorias={ categorias } />
+                  { searchedItens
+                    ? (
+                      <Itens
+                        itens={ listItens }
+                        addToCart={ this.addToCart }
+                      />
+                    ) : (
+                      <ItensCategory
+                        { ...routeProps }
+                        searchInput={ this.searchInput }
+                        searchValue={ searchValue }
+                        searchButton={ this.searchButton }
+                        addToCart={ this.addToCart }
+                      />) }
+                </div>
+              </>
             ) }
           />
           <Route
@@ -121,16 +141,19 @@ class App extends React.Component {
                   searchValue={ searchValue }
                   searchButton={ this.searchButton }
                 />
-                { searchedItens
-              && (
-                <Itens
-                  itens={ listItens }
-                  addToCart={ this.addToCart }
-                />
-              ) }
-                <ProductDetails
-                  { ...routeProps }
-                />
+                <div className="container-row">
+                  <Categorias categorias={ categorias } />
+                  { searchedItens
+                && (
+                  <Itens
+                    itens={ listItens }
+                    addToCart={ this.addToCart }
+                  />
+                ) }
+                  <ProductDetails
+                    { ...routeProps }
+                  />
+                </div>
               </>
             ) }
           />

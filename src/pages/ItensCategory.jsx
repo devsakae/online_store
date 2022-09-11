@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import teste from 'prop-types';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Itens from './Itens';
-import Header from './Header';
+import Loading from './Loading';
 
 export default class ItensCategory extends Component {
   state = {
@@ -23,16 +23,12 @@ export default class ItensCategory extends Component {
 
   render() {
     const { searchString, loading } = this.state;
-    const { searchInput, searchValue, searchButton, addToCart } = this.props;
+    const { addToCart } = this.props;
     return (
-      <>
-        <Header
-          searchInput={ searchInput }
-          searchValue={ searchValue }
-          searchButton={ searchButton }
-        />
-        { !loading && <Itens itens={ searchString.results } addToCart={ addToCart } /> }
-      </>
+      loading ? <Loading />
+        : (
+          <Itens itens={ searchString.results } addToCart={ addToCart } />
+        )
     );
   }
 }
