@@ -24,7 +24,6 @@ class App extends React.Component {
       this.setState({
         categorias: api,
         loading: false,
-        searchValue: '',
       });
     };
     fecthApi();
@@ -43,6 +42,7 @@ class App extends React.Component {
     const objJason = await response.json();
     const itens = objJason.results;
     this.setState({
+      searchValue: '',
       listItens: itens,
       haveItens: true,
     });
