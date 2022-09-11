@@ -33,7 +33,8 @@ export default class Itens extends React.Component {
                   </p>
                   <button
                     type="button"
-                    onClick={ () => addToCart(item.id) }
+                    onClick={ () => addToCart(item) }
+                    data-testid="product-add-to-cart"
                   >
                     Adicionar ao carrinho
                   </button>

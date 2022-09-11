@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import teste from 'prop-types';
+import { getLocal } from '../services/localhost';
 import Header from './Header';
 
 export default class Carrinho extends Component {
   state = {
     loading: true,
+    myCartHere: [],
   };
 
   componentDidMount() {
-    this.setState({ loading: false });
+    const myCartHere = getLocal();
+    this.setState({
+      loading: false,
+      myCartHere,
+    });
   }
 
   render() {
-    const { loading } = this.state;
+    const { loading, myCartHere } = this.state;
     const { searchInput, searchValue, searchButton, categorias } = this.props;
     return (
       <div>
@@ -42,9 +48,26 @@ export default class Carrinho extends Component {
           )}
           <div className="container-col">
             <h3>Carrinho de Compras</h3>
-            <div data-testid="shopping-cart-empty-message">
-              Seu carrinho está vazio
-            </div>
+            { !myCartHere
+              ? (
+                <div data-testid="shopping-cart-empty-message">
+                  Seu carrinho está vazio
+                </div>
+              )
+              : (
+                <div>
+                  { myCartHere.map((item) => (
+                    <div key={ item.id }>
+                      <p data-testid="shopping-cart-product-name">
+                        { item.title }
+                      </p>
+                      <p data-testid="shopping-cart-product-quantity">
+                        1
+                      </p>
+                    </div>
+                  )) }
+                </div>
+              )}
           </div>
         </div>
       </div>

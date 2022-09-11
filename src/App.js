@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import teste from 'prop-types';
 import { getCategories } from './services/api';
-import { getLocal } from './services/localhost';
+import { getLocal, saveLocal } from './services/localhost';
 import Carrinho from './pages/Carrinho';
 import Itens from './pages/Itens';
 import ProductDetails from './pages/ProductDetails';
@@ -30,7 +30,7 @@ class App extends React.Component {
       });
     };
     fecthApi();
-    this.setState({ myCart });
+    if (myCart) this.setState({ myCart });
   }
 
   searchInput = ({ target: { value } }) => {
@@ -52,8 +52,11 @@ class App extends React.Component {
     });
   };
 
-  addToCart = (id) => {
-    
+  addToCart = (produto) => {
+    const { myCart } = this.state;
+    myCart.push(produto);
+    this.setState({ myCart });
+    saveLocal(myCart);
   };
 
   render() {
