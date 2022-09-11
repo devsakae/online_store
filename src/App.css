@@ -45,3 +45,8 @@ header a {
 .categorias li {
   list-style: none;
 }
+
+.item {
+  min-height: 350px;
+  text-align: center;
+}

@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import teste from 'prop-types';
 import { getCategories } from './services/api';
+import { getLocal } from './services/localhost';
 import Carrinho from './pages/Carrinho';
 import Itens from './pages/Itens';
 import ProductDetails from './pages/ProductDetails';
@@ -16,9 +17,11 @@ class App extends React.Component {
     listItens: [],
     searchedItens: false,
     searchValue: '',
+    myCart: [],
   };
 
   componentDidMount() {
+    const myCart = getLocal();
     const fecthApi = async () => {
       const api = await getCategories();
       this.setState({
@@ -27,6 +30,7 @@ class App extends React.Component {
       });
     };
     fecthApi();
+    this.setState({ myCart });
   }
 
   searchInput = ({ target: { value } }) => {
@@ -42,10 +46,14 @@ class App extends React.Component {
     const objJason = await response.json();
     const itens = objJason.results;
     this.setState({
-      searchValue: '',
       listItens: itens,
+      searchValue: '',
       searchedItens: true,
     });
+  };
+
+  addToCart = (id) => {
+    
   };
 
   render() {
@@ -86,7 +94,13 @@ class App extends React.Component {
                   Digite algum termo de pesquisa ou escolha uma categoria.
                 </h3>
               ) }
-            { searchedItens && <Itens itens={ listItens } /> }
+            { searchedItens
+              && (
+                <Itens
+                  itens={ listItens }
+                  addToCart={ this.addToCart }
+                />
+              ) }
           </Route>
           <Route exact path="/carrinho">
             <Carrinho
