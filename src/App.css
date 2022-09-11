@@ -1,6 +1,9 @@
-body {
+.main {
+  width: 75%;
   display: flex;
-  flex-flow: column;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
 }
 
 :root {
@@ -34,9 +37,13 @@ body {
 
 .container-row {
   display: flex;
-  flex-flow: row;
+  flex-flow: row wrap;
 }
 
-.categorias ul li {
+.categorias {
+  width: 20%;
+}
+
+.categorias li {
   list-style: none;
 }

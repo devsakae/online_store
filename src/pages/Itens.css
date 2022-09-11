@@ -1,0 +1,7 @@
+.item {
+  width: 200px;
+  height: 250px;
+  background-color: rgba(250, 250, 250, 0.3);
+  border: 1px black solid;
+  margin: 5px;
+}
