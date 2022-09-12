@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import teste from 'prop-types';
 import { getProductById } from '../services/api';
 import './ProductDetails.css';
+import FormAvaliacao from './FormAvaliacao';
 
 export default class ProductDetails extends Component {
   state = {
@@ -54,6 +55,7 @@ export default class ProductDetails extends Component {
                   <p>{ atr.value_name }</p>
                 </div>
               )) }
+            <FormAvaliacao id={ productdetails.id } />
           </div>)}
       </div>
     );
