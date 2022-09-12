@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import teste from 'prop-types';
 import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
+import './ProductDetails.css';
 
 export default class ProductDetails extends Component {
   state = {
@@ -22,13 +23,10 @@ export default class ProductDetails extends Component {
 
   render() {
     const { productdetails, loading } = this.state;
-    console.log(productdetails);
     return (
       <div className="card">
-        <div>ProductDetails</div>
         { !loading
         && (
-
           <div>
             <h2 data-testid="product-detail-name">{ productdetails.title }</h2>
             <img
@@ -36,15 +34,26 @@ export default class ProductDetails extends Component {
               src={ productdetails.thumbnail }
               alt={ productdetails.title }
             />
-            <p data-testid="product-detail-price">{ productdetails.price }</p>
-            <Link to="/carrinho">
-              <button data-testid="shopping-cart-button" type="button">
-                Adicionar ao carrinho
+            <p
+              data-testid="product-detail-price"
+              className="price"
+            >
+              { `Preço: R$ ${productdetails.price}` }
+            </p>
+            <Link
+              to="/carrinho"
+              data-testid="shopping-cart-button"
+            >
+              <button type="button" className="learn-more">
+                <span className="circle" aria-hidden="true">
+                  <span className="icon arrow" />
+                </span>
+                <span className="button-text">Comprar</span>
               </button>
             </Link>
             { productdetails.attributes
               .map((atr) => (
-                <div key={ atr.id }>
+                <div className="details" key={ atr.id }>
                   <p>{ atr.name }</p>
                   <p>{ atr.value_name }</p>
                 </div>

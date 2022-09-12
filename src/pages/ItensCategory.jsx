@@ -2,37 +2,38 @@ import React, { Component } from 'react';
 import teste from 'prop-types';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Itens from './Itens';
+import Loading from './Loading';
 
-export default class SubCategorias extends Component {
+export default class ItensCategory extends Component {
   state = {
     loading: true,
-    subcategorias: [],
   };
 
   componentDidMount() {
     const getEm = async () => {
       const { match: { params: { id } } } = this.props;
-      const subcategorias = await getProductsFromCategoryAndQuery(id);
+      const searchString = await getProductsFromCategoryAndQuery(id);
       this.setState({
         loading: false,
-        subcategorias,
+        searchString,
       });
     };
     getEm();
   }
 
   render() {
-    const { subcategorias, loading } = this.state;
+    const { searchString, loading } = this.state;
+    const { addToCart } = this.props;
     return (
-      <>
-        <div>SubCategorias</div>
-        { !loading && <Itens itens={ subcategorias.results } /> }
-      </>
+      loading ? <Loading />
+        : (
+          <Itens itens={ searchString.results } addToCart={ addToCart } />
+        )
     );
   }
 }
 
-SubCategorias.propTypes = {
+ItensCategory.propTypes = {
   match: teste.shape({
     params: teste.shape({
       id: teste.string,

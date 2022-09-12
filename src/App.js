@@ -1,100 +1,161 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import teste from 'prop-types';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { getCategories } from './services/api';
-import Categorias from './pages/Categorias';
+import { getLocal, saveLocal } from './services/localhost';
 import Carrinho from './pages/Carrinho';
 import Itens from './pages/Itens';
-import SubCategorias from './pages/SubCategorias';
 import ProductDetails from './pages/ProductDetails';
+import Header from './pages/Header';
+import ItensCategory from './pages/ItensCategory';
+import Categorias from './pages/Categorias';
 
 class App extends React.Component {
   state = {
-    loading: true,
     categorias: [],
     listItens: [],
-    haveItens: false,
-    name: '',
+    searchedItens: false,
+    searchValue: '',
+    myCart: [],
   };
 
   componentDidMount() {
+    const myCart = getLocal();
     const fecthApi = async () => {
       const api = await getCategories();
       this.setState({
         categorias: api,
-        loading: false,
       });
     };
     fecthApi();
+    if (myCart) this.setState({ myCart });
   }
 
-  onInputChange = ({ target: { value } }) => {
+  searchInput = ({ target: { value } }) => {
     this.setState({
-      name: value,
+      searchValue: value,
     });
   };
 
-  handleClick = async () => {
-    const { name } = this.state;
-    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${name}`;
+  searchButton = async () => {
+    const { searchValue } = this.state;
+    const url = `https://api.mercadolibre.com/sites/MLB/search?q=${searchValue}`;
     const response = await fetch(url);
     const objJason = await response.json();
     const itens = objJason.results;
     this.setState({
       listItens: itens,
-      haveItens: true,
+      searchValue: '',
+      searchedItens: true,
     });
   };
 
+  addToCart = (produto) => {
+    const { myCart } = this.state;
+    myCart.push(produto);
+    this.setState({ myCart });
+    saveLocal(myCart);
+  };
+
   render() {
-    const { categorias, loading, listItens, haveItens, name } = this.state;
+    const { categorias, listItens, searchedItens, searchValue } = this.state;
 
     return (
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <Link
-              to="/carrinho"
-              data-testid="shopping-cart-button"
-            >
-              🛒 Carrinho de compras
-            </Link>
-            <input
-              data-testid="query-input"
-              name="name"
-              onChange={ this.onInputChange }
-              value={ name }
+            <Header
+              searchInput={ this.searchInput }
+              searchValue={ searchValue }
+              searchButton={ this.searchButton }
             />
-            <button
-              data-testid="query-button"
-              type="button"
-              onClick={ this.handleClick }
-            >
-              Pesquisar
-            </button>
-            { !loading && <Categorias
-              categorias={ categorias }
-              buscaSubCategorias={ this.buscaSubCategorias }
-            /> }
-            { haveItens ? <Itens itens={ listItens } />
-              : (
-                <h3
-                  data-testid="home-initial-message"
-                >
-                  Digite algum termo de pesquisa ou escolha uma categoria.
-
-                </h3>)}
+            <div className="container-row">
+              <Categorias categorias={ categorias } />
+              { searchedItens
+                ? (
+                  <Itens
+                    itens={ listItens }
+                    addToCart={ this.addToCart }
+                  />
+                )
+                : (
+                  <div data-testid="home-initial-message">
+                    Digite algum termo de pesquisa ou escolha uma categoria.
+                  </div>
+                ) }
+            </div>
           </Route>
           <Route exact path="/carrinho">
-            <Carrinho />
+            <Header
+              searchInput={ this.searchInput }
+              searchValue={ searchValue }
+              searchButton={ this.searchButton }
+            />
+            <div className="container-row">
+              <Categorias categorias={ categorias } />
+              { searchedItens
+                ? (
+                  <Itens
+                    itens={ listItens }
+                    addToCart={ this.addToCart }
+                  />
+                ) : (<Carrinho />) }
+            </div>
           </Route>
-          <Route exact path="/:id" component={ SubCategorias } />
           <Route
-            exact
+            path="/category/:id"
+            render={ (routeProps) => (
+              <>
+                <Header
+                  searchInput={ this.searchInput }
+                  searchValue={ searchValue }
+                  searchButton={ this.searchButton }
+                />
+                <div className="container-row">
+                  <Categorias categorias={ categorias } />
+                  { searchedItens
+                    ? (
+                      <Itens
+                        itens={ listItens }
+                        addToCart={ this.addToCart }
+                      />
+                    ) : (
+                      <ItensCategory
+                        { ...routeProps }
+                        searchInput={ this.searchInput }
+                        searchValue={ searchValue }
+                        searchButton={ this.searchButton }
+                        addToCart={ this.addToCart }
+                      />) }
+                </div>
+              </>
+            ) }
+          />
+          <Route
             path="/productdetails/:id"
-            component={ ProductDetails }
-
+            render={ (routeProps) => (
+              <>
+                <Header
+                  searchInput={ this.searchInput }
+                  searchValue={ searchValue }
+                  searchButton={ this.searchButton }
+                />
+                <div className="container-row">
+                  <Categorias categorias={ categorias } />
+                  { searchedItens
+                && (
+                  <Itens
+                    itens={ listItens }
+                    addToCart={ this.addToCart }
+                  />
+                ) }
+                  <ProductDetails
+                    { ...routeProps }
+                  />
+                </div>
+              </>
+            ) }
           />
         </Switch>
       </BrowserRouter>
@@ -105,5 +166,7 @@ class App extends React.Component {
 export default App;
 
 App.propTypes = {
-  handleClick: teste.func,
+  searchInput: teste.func,
+  searchButton: teste.func,
+  addToCart: teste.func,
 }.isRequired;

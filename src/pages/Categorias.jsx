@@ -6,11 +6,14 @@ class Categorias extends React.Component {
   render() {
     const { categorias } = this.props;
     return (
-      <div className="categorias">
-        <ul>
+      <div>
+        <ul className="categorias">
           {
             categorias.map((categoria) => (
-              <Link to={ `/${categoria.id}` } key={ categoria.id }>
+              <Link
+                to={ `/category/${categoria.id}` }
+                key={ categoria.id }
+              >
                 <li
                   data-testid="category"
                   key={ categoria.id }
