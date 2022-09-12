@@ -5,22 +5,29 @@ export default class FormAvaliacao extends Component {
   state = {
     email: '',
     comentario: '',
-    id: '',
-    avaliacao: [],
     rating: '',
+    temAvaliacoes: [],
   };
 
   componentDidMount() {
-    const { id } = this.state;
-    const avaliacao2 = localStorage.getItem({ id });
-    const avaliacao = JSON.parse(avaliacao2);
-    this.setState({ avaliacao });
+    const { id } = this.props;
+    const antesdevertemAvaliacoes = localStorage.getItem(id);
+    const temAvaliacoes = JSON.parse(antesdevertemAvaliacoes);
+    this.setState({ temAvaliacoes });
   }
 
   salvaLocal = (review) => {
-    const { id } = review;
-    const avaliacao = JSON.stringify(review);
-    localStorage.setItem(`${id}`, avaliacao);
+    const { id } = this.props;
+    const { temAvaliacoes } = this.state;
+    if (temAvaliacoes) {
+      const antesdevermaisAvaliacoes = [...temAvaliacoes, review];
+      const maisAvaliacoes = JSON.stringify(antesdevermaisAvaliacoes);
+      localStorage.setItem(id, maisAvaliacoes);
+    } else {
+      const advnaoTinhaAvaliacao = [review];
+      const naoTinhaAvaliacao = JSON.stringify(advnaoTinhaAvaliacao);
+      localStorage.setItem(id, naoTinhaAvaliacao);
+    }
   };
 
   onInputChange = ({ target }) => {
@@ -31,8 +38,7 @@ export default class FormAvaliacao extends Component {
   };
 
   render() {
-    const { id } = this.props;
-    const { email, rating, comentario } = this.state;
+    const { email, rating, comentario, temAvaliacoes } = this.state;
     return (
       <div>
         <form>
@@ -103,11 +109,22 @@ export default class FormAvaliacao extends Component {
           <button
             data-testid="submit-review-btn"
             type="button"
-            onClick={ this.salvaLocal({ email, rating, comentario, id }) }
+            onClick={ () => this.salvaLocal({ email, rating, comentario }) }
           >
             Enviar
           </button>
         </form>
+        <div>
+          { temAvaliacoes.map((rev, index) => (
+            <div key={ index }>
+              { rev.email }
+              { ' ' }
+              { rev.rating }
+              { ' ' }
+              { rev.comentario }
+            </div>
+          )) }
+        </div>
       </div>
     );
   }
