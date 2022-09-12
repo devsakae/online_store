@@ -152,6 +152,7 @@ class App extends React.Component {
                 ) }
                   <ProductDetails
                     { ...routeProps }
+                    addToCart={ this.addToCart }
                   />
                 </div>
               </>
