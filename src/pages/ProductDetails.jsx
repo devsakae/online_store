@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import teste from 'prop-types';
-import { Link } from 'react-router-dom';
 import { getProductById } from '../services/api';
 import './ProductDetails.css';
 
@@ -23,6 +22,7 @@ export default class ProductDetails extends Component {
 
   render() {
     const { productdetails, loading } = this.state;
+    const { addToCart } = this.props;
     return (
       <div className="card">
         { !loading
@@ -40,17 +40,13 @@ export default class ProductDetails extends Component {
             >
               { `Preço: R$ ${productdetails.price}` }
             </p>
-            <Link
-              to="/carrinho"
-              data-testid="shopping-cart-button"
+            <button
+              type="button"
+              data-testid="product-detail-add-to-cart"
+              onClick={ () => addToCart(productdetails) }
             >
-              <button type="button" className="learn-more">
-                <span className="circle" aria-hidden="true">
-                  <span className="icon arrow" />
-                </span>
-                <span className="button-text">Comprar</span>
-              </button>
-            </Link>
+              Comprar
+            </button>
             { productdetails.attributes
               .map((atr) => (
                 <div className="details" key={ atr.id }>

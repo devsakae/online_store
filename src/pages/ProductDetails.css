@@ -17,3 +17,14 @@
   display: flex;
   justify-content: center;
 }
+
+.nome {
+  max-width: 50%;
+}
+
+.oresto {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  min-width: 45%;
+}
