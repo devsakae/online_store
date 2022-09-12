@@ -1,0 +1,108 @@
+.card {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 99%;
+}
+
+.details {
+  align-items: center;
+  border-bottom: 1px solid grey;
+  display: flex;
+  justify-content: space-between;
+}
+
+.price {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+/* From uiverse.io */
+button {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  display: inline-block;
+  font-family: inherit;
+  font-size: inherit;
+  outline: none;
+  padding: 0;
+  position: relative;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+button .learn-more {
+  height: auto;
+  width: 12rem;
+}
+
+button .learn-more .circle {
+  background: #282936;
+  border-radius: 1.625rem;
+  display: block;
+  height: 3rem;
+  margin: 0;
+  position: relative;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  width: 3rem;
+}
+
+button .learn-more .circle .icon {
+  background: white;
+  bottom: 0;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+}
+
+button .learn-more .circle .icon.arrow {
+  background: none;
+  height: 0.125rem;
+  left: 0.625rem;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+  width: 1.125rem;
+}
+
+button .learn-more .circle .icon.arrow:before {
+  border-right: 0.125rem solid white;
+  border-top: 0.125rem solid white;
+  content: '';
+  height: 0.63rem;
+  position: absolute;
+  right: 0.063rem;
+  top: -0.29rem;
+  transform: rotate(45deg);
+  width: 0.625rem;
+}
+
+button .learn-more .button-text {
+  bottom: 0;
+  color: #282936;
+  font-weight: 700;
+  left: 0;
+  line-height: 1.6;
+  margin: 0 0 0 1.85rem;
+  padding: 0.75rem 0;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  text-transform: uppercase;
+  top: 0;
+  transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+}
+
+button:hover .circle {
+  width: 100%;
+}
+
+button:hover .circle .icon.arrow {
+  background: white;
+  transform: translate(1rem, 0);
+}
+
+button:hover .button-text {
+  color: white;
+}
