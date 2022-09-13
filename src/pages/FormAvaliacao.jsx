@@ -23,10 +23,16 @@ export default class FormAvaliacao extends Component {
       const antesdevermaisAvaliacoes = [...temAvaliacoes, review];
       const maisAvaliacoes = JSON.stringify(antesdevermaisAvaliacoes);
       localStorage.setItem(id, maisAvaliacoes);
+      this.setState({
+        temAvaliacoes: [...temAvaliacoes, maisAvaliacoes],
+      });
     } else {
       const advnaoTinhaAvaliacao = [review];
       const naoTinhaAvaliacao = JSON.stringify(advnaoTinhaAvaliacao);
       localStorage.setItem(id, naoTinhaAvaliacao);
+      this.setState({
+        temAvaliacoes: [...temAvaliacoes, naoTinhaAvaliacao],
+      });
     }
     this.setState({
       email: '',
@@ -44,8 +50,8 @@ export default class FormAvaliacao extends Component {
 
   validacao = () => {
     const { email, rating, comentario } = this.state;
-    return !(email
-      .length > 0 && rating.length > 0 && comentario.length > 0 && email.includes('@'));
+    return !(email.length > 0 && rating.length > 0 && comentario
+      .length > 0 && email.includes('@'));
   };
 
   render() {
@@ -118,16 +124,19 @@ export default class FormAvaliacao extends Component {
           />
           5
           {
-            this.validacao() && <p data-testid="error-msg">Campos inválidos</p>
+            this.validacao() ? (<p data-testid="error-msg">Campos inválidos</p>)
+              : (
+                <p>
+                  <button
+                    data-testid="submit-review-btn"
+                    type="submit"
+                    onClick={ () => this.salvaLocal({ email, rating, comentario }) }
+                  >
+                    Enviar
+                  </button>
+                </p>
+              )
           }
-          <button
-            data-testid="submit-review-btn"
-            type="button"
-            disabled={ this.validacao() }
-            onClick={ () => this.salvaLocal({ email, rating, comentario }) }
-          >
-            Enviar
-          </button>
         </form>
         <div>
           { temAvaliacoes && temAvaliacoes.map((rev, index) => (
