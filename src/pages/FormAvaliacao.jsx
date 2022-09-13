@@ -28,6 +28,11 @@ export default class FormAvaliacao extends Component {
       const naoTinhaAvaliacao = JSON.stringify(advnaoTinhaAvaliacao);
       localStorage.setItem(id, naoTinhaAvaliacao);
     }
+    this.setState({
+      email: '',
+      comentario: '',
+      rating: '',
+    });
   };
 
   onInputChange = ({ target }) => {
@@ -35,6 +40,12 @@ export default class FormAvaliacao extends Component {
     this.setState({
       [name]: value,
     });
+  };
+
+  validacao = () => {
+    const { email, rating, comentario } = this.state;
+    return !(email
+      .length > 0 && rating.length > 0 && comentario.length > 0 && email.includes('@'));
   };
 
   render() {
@@ -47,7 +58,7 @@ export default class FormAvaliacao extends Component {
           >
             Email
             <input
-              data-testid="product-datail-email"
+              data-testid="product-detail-email"
               type="email"
               name="email"
               id="email"
@@ -106,22 +117,26 @@ export default class FormAvaliacao extends Component {
             onChange={ this.onInputChange }
           />
           5
+          {
+            this.validacao() && <p data-testid="error-msg">Campos inválidos</p>
+          }
           <button
             data-testid="submit-review-btn"
             type="button"
+            disabled={ this.validacao() }
             onClick={ () => this.salvaLocal({ email, rating, comentario }) }
           >
             Enviar
           </button>
         </form>
         <div>
-          { temAvaliacoes.map((rev, index) => (
+          { temAvaliacoes && temAvaliacoes.map((rev, index) => (
             <div key={ index }>
-              { rev.email }
+              <p data-testid="review-card-email">{ rev.email }</p>
               { ' ' }
-              { rev.rating }
+              <p data-testid="review-card-rating">{ rev.rating }</p>
               { ' ' }
-              { rev.comentario }
+              <p data-testid="review-card-evaluation">{ rev.comentario }</p>
             </div>
           )) }
         </div>
