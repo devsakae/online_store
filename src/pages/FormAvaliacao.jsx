@@ -6,7 +6,8 @@ export default class FormAvaliacao extends Component {
     email: '',
     comentario: '',
     id: '',
-    avaliacao: '',
+    avaliacao: [],
+    rating: '',
   };
 
   componentDidMount() {
@@ -31,7 +32,7 @@ export default class FormAvaliacao extends Component {
 
   render() {
     const { id } = this.props;
-    const { email, avaliacao, comentario } = this.state;
+    const { email, rating, comentario } = this.state;
     return (
       <div>
         <form>
@@ -61,7 +62,7 @@ export default class FormAvaliacao extends Component {
           </label>
           <input
             data-testid="1-rating"
-            name="avaliacao"
+            name="rating"
             type="radio"
             value="1"
             onChange={ this.onInputChange }
@@ -69,7 +70,7 @@ export default class FormAvaliacao extends Component {
           1
           <input
             data-testid="2-rating"
-            name="avaliacao"
+            name="rating"
             type="radio"
             value="2"
             onChange={ this.onInputChange }
@@ -77,7 +78,7 @@ export default class FormAvaliacao extends Component {
           2
           <input
             data-testid="3-rating"
-            name="avaliacao"
+            name="rating"
             type="radio"
             value="3"
             onChange={ this.onInputChange }
@@ -85,7 +86,7 @@ export default class FormAvaliacao extends Component {
           3
           <input
             data-testid="4-rating"
-            name="avaliacao"
+            name="rating"
             type="radio"
             value="4"
             onChange={ this.onInputChange }
@@ -93,7 +94,7 @@ export default class FormAvaliacao extends Component {
           4
           <input
             data-testid="5-rating"
-            name="avaliacao"
+            name="rating"
             type="radio"
             value="5"
             onChange={ this.onInputChange }
@@ -102,7 +103,7 @@ export default class FormAvaliacao extends Component {
           <button
             data-testid="submit-review-btn"
             type="button"
-            onClick={ this.salvaLocal({ email, avaliacao, comentario, id }) }
+            onClick={ this.salvaLocal({ email, rating, comentario, id }) }
           >
             Enviar
           </button>
