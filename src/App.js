@@ -62,7 +62,7 @@ class App extends React.Component {
     const { categorias, listItens, searchedItens, searchValue } = this.state;
 
     return (
-      <BrowserRouter>
+      <BrowserRouter basename={ process.env.PUBLIC_URL }>
         <Switch>
           <Route exact path="/">
             <Header
