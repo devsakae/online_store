@@ -5,10 +5,10 @@ Código criado seguindo as instruções do projeto "Frontend Online Store" da [T
 
 ## Como instalar?
 
-1. Clone este repositório (dica: use o [Github CLI](https://cli.github.com/) que é mais fácil)
-Com Github Command Line: <code>gh repo clone </code>
-Com SSH: <code>git clone (link)</code>
+Clone este repositório (dica: use o [Github CLI](https://cli.github.com/) que é mais fácil)
+Com Github Command Line: <code>gh repo clone devsakae/online_store</code>
+Com SSH: <code>git clone (link gerado no botão Code)</code>
 
-2. Instale as dependências com o comando <code>npm install</code>
+Instale as dependências com o comando <code>npm install</code>
 
-3. Rode o projeto com o comando <code>npm start</code>
+Rode o projeto com o comando <code>npm start</code>
