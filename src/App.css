@@ -35,8 +35,8 @@ nav {
 
 nav li {
   border-bottom: 0.5px rgba(0, 0, 0, 0.2) solid;
-  border-bottom-right-radius: 10px;
   line-height: 2.2rem;
+  list-style: none;
 }
 
 nav a, a:active, a:visited {
@@ -57,10 +57,6 @@ main {
 
 .container-row {
   display: flex;
-}
-
-.categorias li {
-  list-style: none;
 }
 
 .item {

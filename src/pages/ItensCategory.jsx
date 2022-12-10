@@ -7,15 +7,16 @@ import Loading from './Loading';
 export default class ItensCategory extends Component {
   state = {
     loading: true,
+    searchString: '',
   };
 
   componentDidMount() {
     const getEm = async () => {
       const { match: { params: { id } } } = this.props;
-      const searchString = await getProductsFromCategoryAndQuery(id);
+      const { results } = await getProductsFromCategoryAndQuery(id);
       this.setState({
         loading: false,
-        searchString,
+        searchString: results,
       });
     };
     getEm();
@@ -25,10 +26,12 @@ export default class ItensCategory extends Component {
     const { searchString, loading } = this.state;
     const { addToCart } = this.props;
     return (
-      loading ? <Loading />
-        : (
-          <Itens itens={ searchString.results } addToCart={ addToCart } />
-        )
+      <>
+        { loading && <Loading /> }
+        { !loading && searchString < 1 && <p>Nada foi encontrado.</p> }
+        { !loading && searchString > 0
+        && (<Itens itens={ searchString } addToCart={ addToCart } />) }
+      </>
     );
   }
 }
