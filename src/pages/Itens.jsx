@@ -4,17 +4,24 @@ import { Link } from 'react-router-dom';
 import './Itens.css';
 
 export default class Itens extends React.Component {
+  componentDidMount() {
+    console.log(this.props);
+  }
+
   render() {
     const { itens, addToCart } = this.props;
     return (
-      <div className="main">
+      <div>
         {
-          itens.length < 1 ? (<p>Nenhum produto foi encontrado</p>)
+          (itens.length < 1) ? (
+            <p>
+              Nenhum resultado encontrado.
+            </p>
+          )
             : (
               itens.map((item) => (
                 <div
                   key={ item.id }
-                  data-testid="product"
                   className="item"
                 >
                   <img src={ item.thumbnail } alt={ item.title } />

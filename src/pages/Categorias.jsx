@@ -6,7 +6,7 @@ class Categorias extends React.Component {
   render() {
     const { categorias } = this.props;
     return (
-      <div>
+      <nav>
         <ul className="categorias">
           {
             categorias.map((categoria) => (
@@ -14,17 +14,12 @@ class Categorias extends React.Component {
                 to={ `/category/${categoria.id}` }
                 key={ categoria.id }
               >
-                <li
-                  data-testid="category"
-                  key={ categoria.id }
-                >
-                  { categoria.name }
-                </li>
+                <li>{ categoria.name }</li>
               </Link>
             ))
           }
         </ul>
-      </div>
+      </nav>
     );
   }
 }

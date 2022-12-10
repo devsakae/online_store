@@ -7,15 +7,10 @@
 }
 
 :root {
-
   --branco: #f8f9fc;
-
   --cinza: #7b86aa;
-
   --azulclaro: #bfc8ea;
-
   --preto: #545051;
-
   --azul: #5b67a2;
 }
 
@@ -31,6 +26,28 @@ header {
 header a {
   color: var(--branco);
   text-decoration: none;
+}
+
+nav {
+  min-width: 22vw;
+  box-shadow: #545051 0 10px 10px 0;
+}
+
+nav li {
+  border-bottom: 0.5px rgba(0, 0, 0, 0.2) solid;
+  border-bottom-right-radius: 10px;
+  line-height: 2.2rem;
+}
+
+nav a, a:active, a:visited {
+  text-decoration: none;
+}
+
+main {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+  width: 100%;
 }
 
 .container-col {

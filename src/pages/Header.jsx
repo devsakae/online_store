@@ -9,13 +9,11 @@ export default class Header extends Component {
       <header>
         <div>
           <input
-            data-testid="query-input"
             name="query-input"
             onChange={ searchInput }
             value={ searchValue }
           />
           <button
-            data-testid="query-button"
             type="button"
             onClick={ searchButton }
           >
@@ -23,12 +21,9 @@ export default class Header extends Component {
           </button>
         </div>
         <Link to="/">
-          <div className="loja"><h1>Banca 37</h1></div>
+          <h1 className="loja">Banca 37</h1>
         </Link>
-        <Link
-          to="/carrinho"
-          data-testid="shopping-cart-button"
-        >
+        <Link to="/carrinho">
           🛒 Carrinho de compras
         </Link>
       </header>

@@ -65,102 +65,53 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <HashRouter basename="/">
-          <Switch>
-            <Route exact path="/">
-              <Header
-                searchInput={ this.searchInput }
-                searchValue={ searchValue }
-                searchButton={ this.searchButton }
-              />
-              <div className="container-row">
-                <Categorias categorias={ categorias } />
-                { searchedItens
-                  ? (
-                    <Itens
-                      itens={ listItens }
-                      addToCart={ this.addToCart }
-                    />
-                  )
-                  : (
-                    <div data-testid="home-initial-message">
-                      Digite algum termo de pesquisa ou escolha uma categoria.
-                    </div>
-                  ) }
-              </div>
-            </Route>
-            <Route exact path="/carrinho">
-              <Header
-                searchInput={ this.searchInput }
-                searchValue={ searchValue }
-                searchButton={ this.searchButton }
-              />
-              <div className="container-row">
-                <Categorias categorias={ categorias } />
-                { searchedItens
-                  ? (
-                    <Itens
-                      itens={ listItens }
-                      addToCart={ this.addToCart }
-                    />
-                  ) : (<Carrinho />) }
-              </div>
-            </Route>
-            <Route
-              path="/category/:id"
-              render={ (routeProps) => (
-                <>
-                  <Header
-                    searchInput={ this.searchInput }
-                    searchValue={ searchValue }
-                    searchButton={ this.searchButton }
-                  />
-                  <div className="container-row">
-                    <Categorias categorias={ categorias } />
-                    { searchedItens
-                      ? (
-                        <Itens
-                          itens={ listItens }
-                          addToCart={ this.addToCart }
-                        />
-                      ) : (
+          <Header
+            searchInput={ this.searchInput }
+            searchValue={ searchValue }
+            searchButton={ this.searchButton }
+          />
+          <div className="container-row">
+            <Categorias categorias={ categorias } />
+            { searchedItens
+              ? (
+                <Itens
+                  itens={ listItens }
+                  addToCart={ this.addToCart }
+                />)
+              : (
+                <main>
+                  <Switch>
+                    <Route exact path="/">
+                      <p>Digite algum termo de pesquisa ou escolha uma categoria.</p>
+                    </Route>
+                    <Route exact path="/carrinho">
+                      <Carrinho />
+                    </Route>
+                    <Route
+                      path="/category/:id"
+                      render={ (routeProps) => (
                         <ItensCategory
                           { ...routeProps }
                           searchInput={ this.searchInput }
                           searchValue={ searchValue }
                           searchButton={ this.searchButton }
                           addToCart={ this.addToCart }
-                        />) }
-                  </div>
-                </>
-              ) }
-            />
-            <Route
-              path="/productdetails/:id"
-              render={ (routeProps) => (
-                <>
-                  <Header
-                    searchInput={ this.searchInput }
-                    searchValue={ searchValue }
-                    searchButton={ this.searchButton }
-                  />
-                  <div className="container-row">
-                    <Categorias categorias={ categorias } />
-                    { searchedItens
-                  && (
-                    <Itens
-                      itens={ listItens }
-                      addToCart={ this.addToCart }
+                        />
+                      ) }
                     />
-                  ) }
-                    <ProductDetails
-                      { ...routeProps }
-                      addToCart={ this.addToCart }
+                    <Route
+                      path="/productdetails/:id"
+                      render={ (routeProps) => (
+                        <ProductDetails
+                          { ...routeProps }
+                          addToCart={ this.addToCart }
+                        />
+                      ) }
                     />
-                  </div>
-                </>
-              ) }
-            />
-          </Switch>
+                  </Switch>
+                </main>
+              )}
+          </div>
         </HashRouter>
       </BrowserRouter>
     );
