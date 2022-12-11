@@ -1,0 +1,14 @@
+.cartstyle a {
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  font-size: small;
+  background-color: white;
+  padding: 10px;
+  width: 12vw;
+  border-radius: 40px;
+};
+
+.cartmanyitems {
+  border: 1px solid red;
+};

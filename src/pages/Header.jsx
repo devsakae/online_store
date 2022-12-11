@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import teste from 'prop-types';
+import './Header.css';
 
 export default class Header extends Component {
   render() {
@@ -23,9 +24,14 @@ export default class Header extends Component {
         <Link to="/">
           <h1 className="loja">Banca 37</h1>
         </Link>
-        <Link to="/carrinho">
-          🛒 Carrinho de compras
-        </Link>
+        <div className="cartstyle">
+          <Link to="/carrinho">
+            🛒 Carrinho de compras
+            <div className="cartmanyitems">
+              0
+            </div>
+          </Link>
+        </div>
       </header>
     );
   }
