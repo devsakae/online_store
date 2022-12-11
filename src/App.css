@@ -20,7 +20,7 @@ header {
   display: flex;
   flex-flow: row;
   height: 15vh;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 header a {
@@ -45,6 +45,7 @@ nav a, a:active, a:visited {
 
 main {
   display: flex;
+  flex-flow: row wrap;
   justify-content: space-around;
   padding: 20px;
   width: 100%;
@@ -59,7 +60,7 @@ main {
   display: flex;
 }
 
-.item {
+/* .item {
   min-height: 350px;
   text-align: center;
-}
+} */

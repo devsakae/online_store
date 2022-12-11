@@ -23,13 +23,13 @@ class App extends React.Component {
 
   componentDidMount() {
     const myCart = getLocal();
-    const fecthApi = async () => {
+    const fetchApi = async () => {
       const api = await getCategories();
       this.setState({
         categorias: api,
       });
     };
-    fecthApi();
+    fetchApi();
     if (myCart) this.setState({ myCart });
   }
 
@@ -59,12 +59,18 @@ class App extends React.Component {
     saveLocal(myCart);
   };
 
+  doneSearching = () => {
+    this.setState({
+      searchedItens: false,
+    });
+  };
+
   render() {
     const { categorias, listItens, searchedItens, searchValue } = this.state;
 
     return (
       <BrowserRouter>
-        <HashRouter basename="/">
+        <HashRouter>
           <Header
             searchInput={ this.searchInput }
             searchValue={ searchValue }
@@ -74,10 +80,14 @@ class App extends React.Component {
             <Categorias categorias={ categorias } />
             { searchedItens
               ? (
-                <Itens
-                  itens={ listItens }
-                  addToCart={ this.addToCart }
-                />)
+                <main>
+                  <Itens
+                    itens={ listItens }
+                    addToCart={ this.addToCart }
+                    doneSearching={ this.doneSearching }
+                  />
+                </main>
+              )
               : (
                 <main>
                   <Switch>
@@ -87,27 +97,16 @@ class App extends React.Component {
                     <Route exact path="/carrinho">
                       <Carrinho />
                     </Route>
-                    <Route
-                      path="/category/:id"
-                      render={ (routeProps) => (
-                        <ItensCategory
-                          { ...routeProps }
-                          searchInput={ this.searchInput }
-                          searchValue={ searchValue }
-                          searchButton={ this.searchButton }
-                          addToCart={ this.addToCart }
-                        />
-                      ) }
-                    />
-                    <Route
-                      path="/productdetails/:id"
-                      render={ (routeProps) => (
-                        <ProductDetails
-                          { ...routeProps }
-                          addToCart={ this.addToCart }
-                        />
-                      ) }
-                    />
+                    <Route path="/category/:id">
+                      <ItensCategory
+                        searchInput={ this.searchInput }
+                        searchButton={ this.searchButton }
+                        addToCart={ this.addToCart }
+                      />
+                    </Route>
+                    <Route path="/productdetails/:id">
+                      <ProductDetails addToCart={ this.addToCart } />
+                    </Route>
                   </Switch>
                 </main>
               )}

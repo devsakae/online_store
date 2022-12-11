@@ -1,45 +1,36 @@
-import React, { Component } from 'react';
+import { useEffect, useState } from 'react';
 import teste from 'prop-types';
+import { useParams } from 'react-router-dom';
 import { getProductsFromCategoryAndQuery } from '../services/api';
 import Itens from './Itens';
 import Loading from './Loading';
 
-export default class ItensCategory extends Component {
-  state = {
-    loading: true,
-    searchString: '',
-  };
-
-  componentDidMount() {
-    const getEm = async () => {
-      const { match: { params: { id } } } = this.props;
-      const { results } = await getProductsFromCategoryAndQuery(id);
-      this.setState({
-        loading: false,
-        searchString: results,
-      });
+function ItensCategory(props) {
+  const [loading, setLoading] = useState(true);
+  const [items, setItems] = useState([]);
+  const { addToCart } = props;
+  const { id } = useParams();
+  useEffect(() => {
+    const fetchEm = async () => {
+      const response = await getProductsFromCategoryAndQuery(id);
+      setItems(response.results);
+      setLoading(false);
     };
-    getEm();
-  }
+    fetchEm();
+  }, [id]);
 
-  render() {
-    const { searchString, loading } = this.state;
-    const { addToCart } = this.props;
-    return (
-      <>
-        { loading && <Loading /> }
-        { !loading && searchString < 1 && <p>Nada foi encontrado.</p> }
-        { !loading && searchString > 0
-        && (<Itens itens={ searchString } addToCart={ addToCart } />) }
-      </>
-    );
-  }
+  return (
+    <>
+      { loading && <Loading /> }
+      { !loading && items.length < 1 && <p>Nada foi encontrado.</p> }
+      { !loading && items.length > 0
+      && (<Itens itens={ items } addToCart={ addToCart } />) }
+    </>
+  );
 }
 
 ItensCategory.propTypes = {
-  match: teste.shape({
-    params: teste.shape({
-      id: teste.string,
-    }),
-  }),
+  id: teste.string,
 }.isRequired;
+
+export default ItensCategory;

@@ -1,49 +1,42 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import teste from 'prop-types';
 import { getProductById } from '../services/api';
 import './ProductDetails.css';
 import FormAvaliacao from './FormAvaliacao';
 
-export default class ProductDetails extends Component {
-  state = {
-    loading: true,
-  };
+export default function ProductDetails(props) {
+  const [loading, setLoading] = useState(true);
+  const [productdetails, setDetails] = useState([]);
+  const { addToCart } = props;
+  const { id } = useParams();
 
-  componentDidMount() {
+  useEffect(() => {
     const getEm = async () => {
-      const { match: { params: { id } } } = this.props;
-      const productdetails = await getProductById(id);
-      this.setState({
-        loading: false,
-        productdetails,
-      });
+      const response = await getProductById(id);
+      console.log(response);
+      setLoading(false);
+      setDetails(response);
     };
     getEm();
-  }
+  }, [id]);
 
-  render() {
-    const { productdetails, loading } = this.state;
-    const { addToCart } = this.props;
-    return (
-      <div className="card">
-        { !loading
-        && (
+  return (
+    <div className="card">
+      { loading
+        ? (<p>Loading...</p>)
+        : (
           <div>
-            <h2 data-testid="product-detail-name">{ productdetails.title }</h2>
+            <h2>{ productdetails.title }</h2>
             <img
-              data-testid="product-detail-image"
               src={ productdetails.thumbnail }
               alt={ productdetails.title }
             />
-            <p
-              data-testid="product-detail-price"
-              className="price"
-            >
+            <p className="price">
               { `Preço: R$ ${productdetails.price}` }
             </p>
             <button
               type="button"
-              data-testid="product-detail-add-to-cart"
               onClick={ () => addToCart(productdetails) }
             >
               Comprar
@@ -57,15 +50,10 @@ export default class ProductDetails extends Component {
               )) }
             <FormAvaliacao id={ productdetails.id } />
           </div>)}
-      </div>
-    );
-  }
+    </div>
+  );
 }
 
 ProductDetails.propTypes = {
-  match: teste.shape({
-    params: teste.shape({
-      id: teste.string,
-    }),
-  }),
+  id: teste.obj,
 }.isRequired;

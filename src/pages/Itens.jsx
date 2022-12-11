@@ -2,45 +2,37 @@ import React from 'react';
 import teste from 'prop-types';
 import { Link } from 'react-router-dom';
 import './Itens.css';
+import ItemCard from '../components/ItemCard';
+
+const MAX_CHAR_TITLE = 25;
 
 export default class Itens extends React.Component {
-  componentDidMount() {
-    console.log(this.props);
-  }
-
   render() {
     const { itens, addToCart } = this.props;
     return (
-      <div>
+      <>
         {
           itens.map((item) => (
-            <div
-              key={ item.id }
-              className="item"
-            >
+            <ItemCard key={ item.id }>
+              <h2>{ `${item.title.toUpperCase().substring(0, MAX_CHAR_TITLE)}...` }</h2>
               <img src={ item.thumbnail } alt={ item.title } />
-              <h4>{ item.title }</h4>
-              <p>
-                <Link
-                  to={ `/productdetails/${item.id}` }
-                  key={ item.id }
-                >
-                  Mais detalhes do produto
-                </Link>
-              </p>
-              <p>
-                { `Valor: R$ ${item.price}` }
-              </p>
+              { `Valor: R$ ${item.price}` }
+              <Link
+                to={ `/productdetails/${item.id}` }
+                key={ item.id }
+              >
+                Mais detalhes
+              </Link>
               <button
                 type="button"
                 onClick={ () => addToCart(item) }
               >
                 Adicionar ao carrinho
               </button>
-            </div>
+            </ItemCard>
           ))
         }
-      </div>
+      </>
     );
   }
 }
